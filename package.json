@@ -1,0 +1,34 @@
+{
+  "name": "banner-boilerplate",
+  "version": "1.0.0",
+  "description": "Base files for creating a HTML5 banner ads project",
+  "main": "gulpfile.js",
+  "dependencies": {
+    "fs": "^0.0.2",
+    "gulp": "^3.9.0"
+  },
+  "devDependencies": {
+    "gulp-concat": "^2.6.0",
+    "gulp-jscs": "^2.0.0",
+    "gulp-jshint": "^1.11.2",
+    "path": "^0.11.14"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dipscom/banner-boilerplate.git"
+  },
+  "keywords": [
+    "HTML5",
+    "banner",
+    "ad"
+  ],
+  "author": "Pedro Tavares",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dipscom/banner-boilerplate/issues"
+  },
+  "homepage": "https://github.com/dipscom/banner-boilerplate#readme"
+}
