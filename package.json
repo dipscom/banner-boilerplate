@@ -1,6 +1,6 @@
 {
   "name": "banner-boilerplate",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Base files for creating a HTML5 banner ads project",
   "main": "gulpfile.js",
   "dependencies": {
@@ -8,9 +8,12 @@
     "gulp": "^3.9.0"
   },
   "devDependencies": {
+    "del": "^1.2.1",
     "gulp-concat": "^2.6.0",
+    "gulp-imagemin": "^2.3.0",
     "gulp-jscs": "^2.0.0",
     "gulp-jshint": "^1.11.2",
+    "gulp-load-plugins": "^0.10.0",
     "path": "^0.11.14"
   },
   "scripts": {
