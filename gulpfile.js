@@ -5,6 +5,7 @@
     plugin =  require('gulp-load-plugins')({ lazy: true }),
     path = require('path'),
     fileSystem = require('fs'),
+    del = require('del'),
     foldersPath = 'src/';
 
   function getFolders(dir) {
@@ -15,27 +16,103 @@
       });
   }
 
-  gulp.task('check', function() {
-    // Get the path for the foldersPath
+  gulp.task('build-js', function() {
     var folders = getFolders(foldersPath);
-    //
+
     var tasks = folders.map(
       function(folder) {
         return gulp
-          .src([path.join(foldersPath, 'shared/*.js'), path.join(foldersPath, folder, '*.js')])
-          .pipe(plugin.concat('Main.js'))
-          .pipe(dest(path.join('build/', folder)));
-    });
-    // Check and verify all the JS file against errors
+          .src(path.join(foldersPath, folder, 'js/*.js'))
+          .pipe(plugin.concat('main.js'))
+          .pipe(gulp.dest(path.join('build/', folder)));
+        }
+    );
+
+    return tasks;
   });
 
-  gulp.task('build', function() {
+  gulp.task('build-css', function() {
+    var folders = getFolders(foldersPath);
+
+    var tasks = folders.map(
+      function(folder) {
+        return gulp
+          .src(path.join(foldersPath, folder, 'css/*.css'))
+          .pipe(plugin.concat('styles.css'))
+          .pipe(gulp.dest(path.join('build/', folder)));
+        }
+    );
+
+    return tasks;
+  });
+
+  gulp.task('build-html', function() {
+    var folders = getFolders(foldersPath);
+
+    var tasks = folders.map(
+      function(folder) {
+        return gulp
+          .src(path.join(foldersPath, folder, '*.html'))
+          .pipe(gulp.dest(path.join('build/', folder)));
+        }
+    );
+
+    return tasks;
+  });
+
+  gulp.task('compress-images', function() {
+    var folders = getFolders(foldersPath);
+
+    var tasks = folders.map(
+      function(folder) {
+        return gulp
+          .src(path.join(foldersPath, folder, '/imgs/*.*'))
+          .pipe(plugin.imagemin())
+          .pipe(gulp.dest(path.join('build/', folder)));
+      }
+    );
+
+    return tasks;
+  });
+
+  gulp.task('clean-build', function() {
+    del('build/**/*.*');
+    /*
+    TO DO
+    Figure out a way to call the following
+    compress-images, build-html, build-css, build-js
+    once the del task is completed
+    */
+  });
+
+  gulp.task('clean-deploy', function() {
+    del('deploy/*.*');
+  });
+
+  gulp.task('build', [ 'clean-build', 'compress-images', 'build-html', 'build-css', 'build-js', 'compress-images' ]);
+
+  gulp.task('deploy', [ 'clean-deploy' ], function() {
+    var folders = getFolders('./build/');
+    //
+    var tasks = folders.map(function(folder) {
+      return gulp
+        .src(path.join('build/', folder, '/*'))
+        .pipe(plugin.zip(folder + '.zip'))
+        .pipe(gulp.dest('deploy/'));
+      });
+
+    return tasks;
+  });
+
+  // gulp.task('build', function() {
     // Pick the shared resources
     // Mush it together with the custom resources
     // Rename it to a sensible name
-    // Minify it
     // Put it in the build folder
-  });
+  // });
 
-  gulp.tast('default', ['deploy']);
+  gulp.task('default', ['deploy']);
+    // Minify it
+    // Zip each folder up
+    // Move each of them to a deploy folder
 })();
