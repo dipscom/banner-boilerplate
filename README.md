@@ -15,3 +15,7 @@ Do make sure you have it all installed. My goal here is to have as much automate
 
 The dependencies you will need are:
 gulp
+
+So if you are familiar with npm and Gulp here's a quick copy and paste line to install gulp and the dev dependencies in one go (assumes you have npm and Gulp installed globally and that you are in the correct folder):
+
+npm install --save-dev gulp fs del path gulp-concat gulp-imagemin gulp-jscs gulp-jshint gulp-load-plugins
