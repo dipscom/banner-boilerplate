@@ -6,7 +6,8 @@
     path = require('path'),
     fileSystem = require('fs'),
     del = require('del'),
-    foldersPath = 'src/';
+    foldersPath = 'src/ads/',
+    sharedPath = 'src/shared/';
 
   function getFolders(dir) {
     return fileSystem
@@ -22,7 +23,10 @@
     var tasks = folders.map(
       function(folder) {
         return gulp
-          .src(path.join(foldersPath, folder, 'js/*.js'))
+          .src([
+            path.join(sharedPath, '*js'),
+            path.join(foldersPath, folder, 'js/*.js')
+          ])
           .pipe(plugin.concat('main.js'))
           .pipe(gulp.dest(path.join('build/', folder)));
         }
