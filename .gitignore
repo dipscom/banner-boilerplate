@@ -44,3 +44,7 @@ Temporary Items
 
 # Gulp node modules
 node_modules
+
+# Ignore the build and deploy folders as this is a testing environment
+build
+deploy
