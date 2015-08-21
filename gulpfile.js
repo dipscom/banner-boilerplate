@@ -1,11 +1,16 @@
 (function() {
   'use strict';
   var
-    gulp = require('gulp'),
-    plugin =  require('gulp-load-plugins')({ lazy: true }),
-    path = require('path'),
-    fileSystem = require('fs'),
+    argv = require('yargs')
+      .usage('Usage: $0 -f [string]')
+      .demand(['f'])
+      .argv,
+    browserSync = require('browser-sync').create(),
     del = require('del'),
+    fileSystem = require('fs'),
+    gulp = require('gulp'),
+    path = require('path'),
+    plugin =  require('gulp-load-plugins')({ lazy: true }),
     // TO DO:
     // Move these paths to gulpconfig.js
     foldersPath = 'src/ads/',
@@ -51,22 +56,11 @@
     return tasks;
   });
 
-  gulp.task('build-css', function() {
-    var folders = getFolders(foldersPath);
-
-    var tasks = folders.map(
-      function(folder) {
-        return gulp
-        .src([
-          path.join(sharedPath, '*css'),
-          path.join(foldersPath, folder, 'css/*.css')
-        ])
-        .pipe(plugin.concat('styles.css'))
-        .pipe(gulp.dest(path.join('build/', folder)));
-      }
-    );
-
-    return tasks;
+  gulp.task('watch-js', ['build-js'], function(){
+    // TO DO:
+    // Make it so it is not needed to copy all
+    // external JS libraries on each reload
+    browserSync.reload();
   });
 
   gulp.task('build-html', function() {
@@ -81,6 +75,29 @@
     );
 
     return tasks;
+  });
+
+  gulp.task('build-css', function() {
+    var folders = getFolders(foldersPath);
+
+    var tasks = folders.map(
+      function(folder) {
+        return gulp
+        .src([
+          path.join(sharedPath, '*css'),
+          path.join(foldersPath, folder, 'css/*.css')
+        ])
+        .pipe(plugin.concat('styles.css'))
+        .pipe(gulp.dest(path.join('build/', folder)))
+        .pipe(browserSync.stream());
+      }
+    );
+
+    return tasks;
+  });
+
+  gulp.task('watch-html', ['build-html'], function(){
+    browserSync.reload();
   });
 
   gulp.task('compress-images', function() {
@@ -112,7 +129,7 @@
     del('deploy/*.*');
   });
 
-  gulp.task('build', [ 'clean-build', 'compress-images', 'build-html', 'build-css', 'build-js', 'compress-images' ]);
+  gulp.task('build', [ 'clean-build', 'compress-images', 'build-html', 'build-css', 'build-js' ]);
 
   gulp.task('deploy', [ 'clean-deploy' ], function() {
     // TO DO:
@@ -131,11 +148,20 @@
     return tasks;
   });
 
-  // gulp.task('watch', function() {
+  gulp.task('watch',['build'], function() {
+    var dest = 'build/' + argv.f;
+    console.log("Watching folder: ", argv.f, dest);
+    browserSync.init({
+      server: dest
+    });
+
+    gulp.watch('src/**/*.css', ['build-css']);
+    gulp.watch('src/**/*.html', ['watch-html']);
+    gulp.watch('src/**/*.js', ['watch-js']);
     // TO DO:
     // Watch a selected ad based on an argument passed
     // when starting the task
-  // });
+  });
 
   gulp.task('default', ['deploy']);
     // Minify it
