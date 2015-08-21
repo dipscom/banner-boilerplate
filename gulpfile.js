@@ -2,8 +2,8 @@
   'use strict';
   var
     argv = require('yargs')
-      .usage('Usage: $0 -f [string]')
-      .demand(['f'])
+      .usage('Usage: -f [string]')
+      // .demand(['f'])
       .argv,
     browserSync = require('browser-sync').create(),
     del = require('del'),
@@ -49,6 +49,7 @@
             path.join(foldersPath, folder, 'js/*.js')
           ])
           .pipe(plugin.concat('main.js'))
+          .pipe(plugin.if(argv.production, plugin.uglify()))
           .pipe(gulp.dest(path.join('build/', folder)));
         }
     );
@@ -88,6 +89,7 @@
           path.join(foldersPath, folder, 'css/*.css')
         ])
         .pipe(plugin.concat('styles.css'))
+        .pipe(plugin.if(argv.production, plugin.minifyCss()))
         .pipe(gulp.dest(path.join('build/', folder)))
         .pipe(browserSync.stream());
       }
@@ -152,15 +154,11 @@
     var dest = 'build/' + argv.f;
     console.log("Watching folder: ", argv.f, dest);
     browserSync.init({
-      server: dest
-    });
+      server: dest});
 
     gulp.watch('src/**/*.css', ['build-css']);
     gulp.watch('src/**/*.html', ['watch-html']);
     gulp.watch('src/**/*.js', ['watch-js']);
-    // TO DO:
-    // Watch a selected ad based on an argument passed
-    // when starting the task
   });
 
   gulp.task('default', ['deploy']);
