@@ -1,6 +1,6 @@
 # HTMLL Banner boilerplate
 
->> Work in progress, still writting this thing up <<
+>> Work in progress, still writting this thing up
 
 
 Base setup for a HTML5 banner rich media ad project automated using Gulp
