@@ -1,4 +1,4 @@
-# HTMLL Banner boilerplate
+# HTML Banner boilerplate
 
 >> Work in progress, still writting this thing up
 
