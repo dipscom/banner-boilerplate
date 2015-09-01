@@ -10,22 +10,21 @@ _____
 <b>Setup</b>
 ______
 
-
+<br />
 <i>Important:</i> If you have not worked with Gulp before you will need to install <a href="https://nodejs.org/">NodeJS</a> before going any further.
 
+<br />
 - First download the zip and extract it in the relevant folder.
 - Rename the folder to suit your needs.
 - Open your command line tool of choice and navigate to the renamed folder.
 - Using npm install Gulp and its dependencies.
 
-The dependencies you will need are:
+The dependencies you will need:
 - BrowserSync;
 - Del;
 - FS;
 - Paths;
 - Yargs;
-
-The Gulp plugins used are:
 - Gulp Concat;
 - Gulp If;
 - Gulp Imagemin;
