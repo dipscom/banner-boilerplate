@@ -3,7 +3,7 @@
 > Work in progress, still writting this thing up
 
 
-<b>Base setup for an automated HTML5 banner ad project using Gulp<b>
+<b>Base setup for an automated HTML5 banner ad project using Gulp</b>
 _____
 
 
