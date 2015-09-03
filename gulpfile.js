@@ -101,8 +101,20 @@
   gulp.task('watch-html', ['build-html'], function(){
     browserSync.reload();
   });
+  
+  gulp.task('copy-shared-images', function() {
+    var folders = getFolders(foldersPath);
 
-  gulp.task('compress-images', function() {
+    var tasks = folders.map(
+      function(folder) {
+        return gulp
+        .src(path.join(sharedPath, 'imgs/*.*'))
+        .pipe(gulp.dest(path.join('build/', folder)));
+      }
+    );
+  });
+
+  gulp.task('compress-images', ['copy-shared-images'], function() {
     var folders = getFolders(foldersPath);
 
     var tasks = folders.map(
