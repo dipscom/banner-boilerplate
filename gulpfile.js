@@ -109,6 +109,7 @@
       function(folder) {
         return gulp
         .src(path.join(sharedPath, 'imgs/*.*'))
+        .pipe(plugin.imagemin())
         .pipe(gulp.dest(path.join('build/', folder)));
       }
     );
