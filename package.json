@@ -10,6 +10,7 @@
     "browser-sync": "^2.8.2",
     "del": "^1.2.1",
     "fs": "^0.0.2",
+    "gulp-autoprefixer": "^3.0.1",
     "gulp-concat": "^2.6.0",
     "gulp-if": "^1.2.5",
     "gulp-imagemin": "^2.3.0",

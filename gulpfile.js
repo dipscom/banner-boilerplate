@@ -89,6 +89,7 @@
           path.join(foldersPath, folder, 'css/*.css')
         ])
         .pipe(plugin.concat('styles.css'))
+        .pipe(plugin.autoprefixer({ browsers: ['last 2 versions'] }))
         .pipe(plugin.if(argv.production, plugin.minifyCss()))
         .pipe(gulp.dest(path.join('build/', folder)))
         .pipe(browserSync.stream());
@@ -101,7 +102,7 @@
   gulp.task('watch-html', ['build-html'], function(){
     browserSync.reload();
   });
-  
+
   gulp.task('copy-shared-images', function() {
     var folders = getFolders(foldersPath);
 
