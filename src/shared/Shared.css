@@ -18,6 +18,10 @@ img, #clicktag {
 }
 
 #clicktag {
+  /* Zero the left and top properties so that
+  the clicktag is always correctly positioned*/
+  left: 0;
+  top: 0;
   width: 100%;
   height: 100%;
   z-index: 1;
