@@ -110,19 +110,32 @@
       function(folder) {
         return gulp
         .src(path.join(sharedPath, 'imgs/*.*'))
-        .pipe(plugin.imagemin())
         .pipe(gulp.dest(path.join('build/', folder)));
       }
     );
   });
 
-  gulp.task('compress-images', ['copy-shared-images'], function() {
+  gulp.task('copy-images', ['copy-shared-images'], function() {
     var folders = getFolders(foldersPath);
 
     var tasks = folders.map(
       function(folder) {
         return gulp
           .src(path.join(foldersPath, folder, '/imgs/*.*'))
+          .pipe(gulp.dest(path.join('build/', folder)));
+      }
+    );
+
+    return tasks;
+  });
+
+  gulp.task('compress-images', function() {
+    var folders = getFolders(foldersPath);
+
+    var tasks = folders.map(
+      function(folder) {
+        return gulp
+          .src(path.join('build/', folder, './*.{gif,jpg,png,svg}'))
           .pipe(plugin.imagemin())
           .pipe(gulp.dest(path.join('build/', folder)));
       }
@@ -145,12 +158,15 @@
     del('deploy/*.*');
   });
 
-  gulp.task('build', [ 'clean-build', 'compress-images', 'build-html', 'build-css', 'build-js' ]);
+  gulp.task('build', [ 'clean-build', 'copy-images', 'build-html', 'build-css', 'build-js' ]);
 
-  gulp.task('deploy', [ 'clean-deploy' ], function() {
-    // TO DO:
-    // Run the clean-deploy task first then, run the build task
-    //
+  gulp.task('deploy', [ 'clean-deploy', 'compress-images' ], function() {
+    /* TO DO:
+      Run the clean-deploy task first then, run the build task
+
+      BUG !
+      The compressed images are NOT being zipped into the deploy folders
+    */
     // Zip each ad on its own folder and place them into a 'deploy' folder
     var folders = getFolders('./build/');
 
