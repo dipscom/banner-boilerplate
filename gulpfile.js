@@ -129,6 +129,10 @@
     return tasks;
   });
 
+  gulp.task('watch-images', ['copy-images'], function(){
+  browserSync.reload();
+  });
+
   gulp.task('compress-images', function() {
     var folders = getFolders(foldersPath);
 
@@ -184,8 +188,10 @@
     var dest = 'build/' + argv.f;
     console.log("Watching folder: ", argv.f, dest);
     browserSync.init({
-      server: dest});
+      server: dest
+    });
 
+    gulp.watch('src/**/*.{gif,jpg,png,svg}', ['watch-images']);
     gulp.watch('src/**/*.css', ['build-css']);
     gulp.watch('src/**/*.html', ['watch-html']);
     gulp.watch('src/**/*.js', ['watch-js']);
