@@ -193,7 +193,7 @@
     });
 
     gulp.watch('src/**/*.{gif,jpg,png,svg}', ['watch-images']);
-    gulp.watch('src/**/*.css', ['build-css']);
+    gulp.watch('src/**/*.scss', ['build-css']);
     gulp.watch('src/**/*.html', ['watch-html']);
     gulp.watch('src/**/*.js', ['watch-js']);
   });
