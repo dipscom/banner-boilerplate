@@ -1,0 +1,11 @@
+/*
+  These are the custom css rules
+  for the individual banners
+*/
+$adWidth: 300px;
+$adHeight: 250px;
+
+#ad {
+  height: $adHeight - 2px;
+  width: $adWidth - 2px;
+}

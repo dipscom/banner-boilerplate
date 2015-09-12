@@ -1,3 +1,7 @@
+/*
+  These are the shared css rules
+  applied to all banners
+*/
 html, body {
   border: 0;
   margin: 0;
@@ -10,11 +14,10 @@ img, #clicktag {
 
 #ad {
   border: 1px solid black;
-  height: 248px;
   position: relative;
   overflow: hidden;
-  width: 299px;
   background-color: green;
+  // Width and height to be defined in the custom scss file
 }
 
 #clicktag {

@@ -25,15 +25,16 @@ The dependencies you will need:
 - Gulp JsHint;
 - Gulp Load Plugins;
 - Gulp Minfy CSS;
+- Gulp Sass;
 - Gulp Uglify;
 - Gulp Zip;
 
 To make is easy, here's a quick copy and paste line to install gulp and the dev dependencies in one go.
 > *Assumes you have npm and Gulp installed globally and that you are in the correct folder*:
 
-    npm install --save-dev gulp browser-sync del fs gulp-autoprefixer gulp-concat gulp-if gulp-imagemin gulp-jscs gulp-jshint gulp-load-plugins gulp-minify-css gulp-uglify gulp-zip path yargs
+    npm install --save-dev gulp browser-sync del fs gulp-autoprefixer gulp-concat gulp-if gulp-imagemin gulp-jscs gulp-jshint gulp-load-plugins gulp-minify-css gulp-sass gulp-uglify gulp-zip path yargs
 
-##Usage: 
+##Usage:
 
 ###Short Version
 You will be working from the `src` folder.

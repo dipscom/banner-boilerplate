@@ -85,10 +85,11 @@
       function(folder) {
         return gulp
         .src([
-          path.join(sharedPath, '*css'),
-          path.join(foldersPath, folder, 'css/*.css')
+          path.join(sharedPath, '*scss'),
+          path.join(foldersPath, folder, 'sass/*.scss')
         ])
-        .pipe(plugin.concat('styles.css'))
+        .pipe(plugin.concat('styles.scss'))
+        .pipe(plugin.sass().on('error', plugin.sass.logError))
         .pipe(plugin.autoprefixer({ browsers: ['last 2 versions'] }))
         .pipe(plugin.if(argv.production, plugin.minifyCss()))
         .pipe(gulp.dest(path.join('build/', folder)))
