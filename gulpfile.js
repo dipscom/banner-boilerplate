@@ -163,7 +163,13 @@
     del('deploy/*.*');
   });
 
-  gulp.task('build', [ 'clean-build', 'copy-images', 'build-html', 'build-css', 'build-js' ]);
+  gulp.task('build', [
+    'clean-build',
+    'copy-images',
+    'build-html',
+    'build-css',
+    'build-js'
+  ]);
 
   gulp.task('deploy', [ 'clean-deploy', 'compress-images' ], function() {
     /* TO DO:
