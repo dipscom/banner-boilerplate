@@ -45,7 +45,7 @@
       function(folder) {
         return gulp
           .src([
-            path.join(sharedPath, '*js'),
+            path.join(sharedPath, '/js/*.js'),
             path.join(foldersPath, folder, 'js/*.js')
           ])
           .pipe(plugin.concat('main.js'))

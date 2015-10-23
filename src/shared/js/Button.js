@@ -36,5 +36,5 @@ var Button = function(elements) {
     // The event dispatched carries the id name of the dispatecher
     window.dispatchEvent(event);
   }
-
 };
+/* End of Button.js */
