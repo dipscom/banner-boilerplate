@@ -8,7 +8,7 @@ var DateChecker = function() {
       // preReleasePeriod is defined
       // Check to see is releaseDate is before preReleasePeriod
       if(releaseDate < preReleasePeriod) {
-        return "releaseDate is before preReleasePeriod";
+        throw new Error("releaseDate is before preReleasePeriod. Reverse their order");
       }
       // is today before the preReleasePeriod date
       if(today < preReleasePeriod) {
