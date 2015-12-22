@@ -1,3 +1,6 @@
+/*
+NOT WORKING ! ! ! !
+*/
 var DateChecker = function() {
   var today = new Date();
   today.getFullYear();
