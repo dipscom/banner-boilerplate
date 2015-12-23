@@ -1,39 +1,38 @@
-/*
-NOT WORKING ! ! ! !
-*/
-var DateChecker = function() {
+var DateChecker = function(releaseDate, preReleasePeriod) {
   var today = new Date();
-  today.getFullYear();
- 
-  this.checkDate = function(releaseDate, preReleasePeriod) {
-    // Check if preReleasePeriod is defined
-    if(preReleasePeriod) {
-      // preReleasePeriod is defined
-      // Check to see is releaseDate is before preReleasePeriod
-      if(releaseDate < preReleasePeriod) {
-        throw new Error("releaseDate is before preReleasePeriod. Reverse their order");
-      }
-      // is today before the preReleasePeriod date
-      if(today < preReleasePeriod) {
-        // Yes it is
-        return "Before Release Period";
-      }
-      // Is today after preReleasePeriod but before releaseDate
-      if(today < releaseDate) {
-        // Yes it is
-        return "During Release Pedriod";
-      }
+      today.getFullYear();
+
+  var releaseDate = new Date(releaseDate);
+
+  if(dbug){ console.log("Today: ", today, " ", "Release date: ", releaseDate, " ", "Release period ", preReleasePeriod);}
+
+  // Check if preReleasePeriod is defined
+  if(preReleasePeriod) {
+    // preReleasePeriod is defined
+    // Check to see is releaseDate is before preReleasePeriod
+    if(releaseDate < preReleasePeriod) {
+      throw new Error("releaseDate is before preReleasePeriod. Reverse their order");
     }
-    // preReleasePeriod is not defined
-    // is today before the releaseDate
-    if( today < releaseDate ) {
+    // is today before the preReleasePeriod date
+    if(today < preReleasePeriod) {
       // Yes it is
-      return "Before Release";
+      return "Before Release Period";
     }
-    // Is today after the releasDate
-    else {
+    // Is today after preReleasePeriod but before releaseDate
+    if(today < releaseDate) {
       // Yes it is
-      return "After Release";
+      return "During Release Period";
     }
+  }
+  // preReleasePeriod is not defined
+  // is today before the releaseDate
+  if( today < releaseDate ) {
+    // Yes it is
+    return "Before Release";
+  }
+  // Is today after the releasDate
+  else {
+    // Yes it is
+    return "After Release";
   }
 }
