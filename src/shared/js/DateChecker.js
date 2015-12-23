@@ -3,6 +3,7 @@ var DateChecker = function(releaseDate, preReleasePeriod) {
       today.getFullYear();
 
   var releaseDate = new Date(releaseDate);
+  var preReleasePeriod = new Date(preReleasePeriod);
 
   if(dbug){ console.log("Today: ", today, " ", "Release date: ", releaseDate, " ", "Release period ", preReleasePeriod);}
 
