@@ -11,8 +11,7 @@
     gulp = require('gulp'),
     path = require('path'),
     plugin =  require('gulp-load-plugins')({ lazy: true }),
-    // TO DO:
-    // Move these paths to gulpconfig.js
+    // TO DO: Move these paths to gulpconfig.js
     foldersPath = 'src/ads/',
     sharedPath = 'src/shared/';
 
@@ -49,7 +48,8 @@
             path.join(foldersPath, folder, 'js/*.js')
           ])
           .pipe(plugin.concat('main.js'))
-          .pipe(plugin.if(argv.production, plugin.uglify()))
+          // TO DO: move the minifying to a deploy task
+          .pipe(plugin.uglify())
           .pipe(gulp.dest(path.join('build/', folder)));
         }
     );
@@ -91,7 +91,7 @@
         ])
         .pipe(plugin.concat('styles.css'))
         .pipe(plugin.autoprefixer({ browsers: ['last 2 versions'] }))
-// TO DO: Move the minifying to a production task
+// TO DO: Move the minifying to a deploy task
         .pipe(plugin.cssnano())
         .pipe(gulp.dest(path.join('build/', folder)))
         .pipe(browserSync.stream());
