@@ -1,0 +1,9 @@
+/*
+  These are the custom css rules
+  for the individual banners
+*/
+#ad {
+  /* Height and width of the ad should be 2 pixels smaller than the banner total size to account for the 1 pixel border around it */
+  height: 248px;
+  width: 298px;
+}

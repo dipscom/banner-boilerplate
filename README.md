@@ -25,7 +25,6 @@ The dependencies you will need:
 - Gulp JsHint;
 - Gulp Load Plugins;
 - Gulp Minfy CSS;
-- Gulp Sass;
 - Gulp Uglify;
 - Gulp Zip;
 
@@ -37,6 +36,11 @@ To make is easy, here's a quick copy and paste line to install gulp and the dev 
 ##Usage:
 
 ###Short Version
+Open the command line of your choice.
+Navigate to the working directory.
+Run 'npm install' - this will install all the dependencies.
+
+
 You will be working from the `src` folder.
 
 The main `index.html` is located in the `shared` folder as are the, aptly named, `Shared.js` and `Shared.css`.

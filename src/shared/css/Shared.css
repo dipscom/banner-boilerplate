@@ -17,12 +17,12 @@ img, #clicktag {
   position: relative;
   overflow: hidden;
   background-color: green;
-  // Width and height to be defined in the custom scss file
+  /* Width and height to be defined in the custom scss file */
 }
 
 #clicktag {
   /* Zero the left and top properties so that
-  the clicktag is always correctly positioned*/
+  the clicktag is always correctly positioned */
   left: 0;
   top: 0;
   width: 100%;

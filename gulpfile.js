@@ -83,15 +83,15 @@
 
     var tasks = folders.map(
       function(folder) {
+        console.log(sharedPath);
         return gulp
         .src([
-          path.join(sharedPath, '*scss'),
-          path.join(foldersPath, folder, 'sass/*.scss')
+          path.join(sharedPath, 'css/*.css'),
+          path.join(foldersPath, folder, 'css/*.css')
         ])
-        .pipe(plugin.concat('styles.scss'))
-        .pipe(plugin.sass().on('error', plugin.sass.logError))
+        .pipe(plugin.concat('styles.css'))
         .pipe(plugin.autoprefixer({ browsers: ['last 2 versions'] }))
-        .pipe(plugin.if(argv.production, plugin.minifyCss()))
+        // .pipe(plugin.if(argv.production, plugin.minifyCss()))
         .pipe(gulp.dest(path.join('build/', folder)))
         .pipe(browserSync.stream());
       }
@@ -199,7 +199,7 @@
     });
 
     gulp.watch('src/**/*.{gif,jpg,png,svg}', ['watch-images']);
-    gulp.watch('src/**/*.scss', ['build-css']);
+    gulp.watch('src/**/*.css', ['build-css']);
     gulp.watch('src/**/*.html', ['watch-html']);
     gulp.watch('src/**/*.js', ['watch-js']);
   });
