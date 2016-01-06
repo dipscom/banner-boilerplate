@@ -91,7 +91,8 @@
         ])
         .pipe(plugin.concat('styles.css'))
         .pipe(plugin.autoprefixer({ browsers: ['last 2 versions'] }))
-        // .pipe(plugin.if(argv.production, plugin.minifyCss()))
+// TO DO: Move the minifying to a production task
+        .pipe(plugin.cssnano())
         .pipe(gulp.dest(path.join('build/', folder)))
         .pipe(browserSync.stream());
       }
@@ -204,7 +205,7 @@
     gulp.watch('src/**/*.js', ['watch-js']);
   });
 
-  gulp.task('default', ['deploy']);
+  gulp.task('default', ['build']);
     // Minify it
     // Zip each folder up
     // Move each of them to a deploy folder
