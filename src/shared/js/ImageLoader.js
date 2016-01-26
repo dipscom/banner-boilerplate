@@ -1,29 +1,35 @@
-var ImageLoader = function(dbug) {
+var ImageLoader = function(path, dbug) {
   "use strict";
-  var dbug = dbug;
   if(dbug) console.log("[IMAGE_LOADER] Init");
   // Total count of images to load
   var count = 0;
 
-  this.loadImage = function(parent, names, extension) {
+  this.loadImage = function(parent, names, extension, id, className) {
+    // Set some defaults
+    // TODO:::
     // Grab the html tag based on the string provided
     var container = document.getElementById(parent);
     // Loop thru the array provided
     for( var i = 0, ttl = names.length; i < ttl; i++ ) {
       // And append the image created into the html tag given
-      container.appendChild(createImage(names[i], extension));
+      container.appendChild(createImage(names[i], extension, path, id, className));
     }
   };
 
-  function createImage(name, extension) {
+  function createImage(name, extension, path, className, id) {
     if(dbug) console.log("[IMAGE_LOADER] Image " + name);
     // Add one to the count of images loading
     count++;
     // Create the element tag
     var image = document.createElement("img");
-    image.src = name + extension;
-    image.id = name;
+    image.src = (path ? path + name + extension : name + extension)
+    // If an id name was provided, use it - Otherwise use the original filename
+    image.id = (id ? id : name);
+    // If a class name was provided, use it
+    if(className) image.className = className;
+
     image.onload = countReady;
+
     return image;
   }
 
