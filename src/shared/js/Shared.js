@@ -1,5 +1,5 @@
 /* Shared.js */
-Ad = function() {
+var Ad = function() {
   'use strict';
   // add the buttons
   var btns = new Button(["clicktag"]);
