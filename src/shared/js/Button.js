@@ -4,12 +4,31 @@
 */
 var Button = function(elements) {
   "use strict";
-  for (var i = 0; i < elements.length; i++) {
-    var el = document.getElementById(elements[i]);
-    el.style.cursor = "pointer";
-    el.addEventListener("click", clicked); // For all major browsers,  except IE 8 and earlier
-    el.addEventListener("mouseenter", onOver, false);
-    el.addEventListener("mouseleave", onOut, false);
+  this.enable = function(elements) {
+    enableButtons(elements);
+  }
+
+  this.disnable = function(elements) {
+    disableButtons(elements);
+  }
+
+  function enableButtons(elements) {
+    for (var i = 0; i < elements.length; i++) {
+      var el = document.getElementById(elements[i]);
+      el.style.cursor = "pointer";
+      el.addEventListener("click", clicked); // For all major browsers,  except IE 8 and earlier
+      el.addEventListener("mouseenter", onOver, false);
+      el.addEventListener("mouseleave", onOut, false);
+    }
+  }
+
+  function disableButtons(elements) {
+    for (var i = 0; i < elements.length; i++) {
+      var el = document.getElementById(elements[i]);
+      el.removeEventListener("click", clicked); // For all major browsers,  except IE 8 and earlier
+      el.removeEventListener("mouseenter", onOver, false);
+      el.removeEventListener("mouseleave", onOut, false);
+    }
   }
 
   function clicked(e) {
