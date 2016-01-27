@@ -8,8 +8,8 @@ var Button = function(elements) {
     var el = document.getElementById(elements[i]);
     el.style.cursor = "pointer";
     el.addEventListener("click", clicked); // For all major browsers,  except IE 8 and earlier
-    el.addEventListener("mouseover", onOver);
-    el.addEventListener("mouseout", onOut);
+    el.addEventListener("mouseenter", onOver, false);
+    el.addEventListener("mouseleave", onOut, false);
   }
 
   function clicked(e) {
