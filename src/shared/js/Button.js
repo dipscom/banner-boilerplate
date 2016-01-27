@@ -1,7 +1,3 @@
-/*
-  Original code is maintained in
-  http://codepen.io/dipscom/pen/RPmrzo
-*/
 var Button = function(elements) {
   "use strict";
   this.enable = function(elements) {
