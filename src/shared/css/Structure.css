@@ -13,11 +13,11 @@ section, img, #clicktag {
 }
 
 ad-banner {
-  border: 1px solid black;
+  border: 1px solid rgb(0, 0, 0);
   display: block;
   position: relative;
   overflow: hidden;
-  background-color: green;
+  background-color: rgb(20, 20, 20);
   /* Width and height to be defined in the custom scss file */
 }
 
@@ -33,12 +33,41 @@ ad-banner {
   opacity: 0;
 }
 
+section {
+  width: 100%;
+}
+
+
+
+/* ************** */
+/* Helper classes */
+/* ************** */
+.centerV {
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.centerH {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.centerHV {
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
 
 
 
 /* **************** */
 /* Z-index ordering */
 /* **************** */
-#clicktag {
+section {
   z-index: 1;
+}
+
+#clicktag {
+  z-index: 2;
 }

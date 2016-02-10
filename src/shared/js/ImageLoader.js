@@ -5,8 +5,8 @@ var ImageLoader = function(path, dbug) {
   var count = 0;
 
   this.load = function(parent, names, extension, className, id) {
-    // Grab the html tag based on the string provided
-    var container = document.getElementById(parent);
+    // Grab the html tag based on the string provided using its id or tag name
+    var container = document.getElementById(parent) || document.querySelector(parent);
     // Loop thru the array provided
     for( var i = 0, ttl = names.length; i < ttl; i++ ) {
       // And append the image created into the html tag given

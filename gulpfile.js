@@ -91,7 +91,7 @@
                     .pipe(plugin.concat('styles.css'))
                     .pipe(plugin.autoprefixer({ browsers: ['last 2 versions'] }))
                     // TO DO: Move the minifying to a deploy task
-                    .pipe(plugin.cssnano())
+                    // .pipe(plugin.cssnano())
                     .pipe(gulp.dest(path.join('build/', folder)))
                     .pipe(browserSync.stream());
       });
