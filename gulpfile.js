@@ -84,19 +84,17 @@
     var tasks = folders.map(
       function(folder) {
         console.log(sharedPath);
-        return gulp
-        .src([
-          path.join(sharedPath, 'css/*.css'),
-          path.join(foldersPath, folder, 'css/*.css')
-        ])
-        .pipe(plugin.concat('styles.css'))
-        .pipe(plugin.autoprefixer({ browsers: ['last 2 versions'] }))
-// TO DO: Move the minifying to a deploy task
-        .pipe(plugin.cssnano())
-        .pipe(gulp.dest(path.join('build/', folder)))
-        .pipe(browserSync.stream());
-      }
-    );
+        return gulp.src([
+                      path.join(sharedPath, 'css/*.css'),
+                      path.join(foldersPath, folder, 'css/*.css')
+                    ])
+                    .pipe(plugin.concat('styles.css'))
+                    .pipe(plugin.autoprefixer({ browsers: ['last 2 versions'] }))
+                    // TO DO: Move the minifying to a deploy task
+                    .pipe(plugin.cssnano())
+                    .pipe(gulp.dest(path.join('build/', folder)))
+                    .pipe(browserSync.stream());
+      });
 
     return tasks;
   });
@@ -132,7 +130,7 @@
   });
 
   gulp.task('watch-images', ['copy-images'], function(){
-  browserSync.reload();
+    browserSync.reload();
   });
 
   gulp.task('compress-images', function() {
@@ -146,6 +144,18 @@
           .pipe(gulp.dest(path.join('build/', folder)));
       }
     );
+
+    return tasks;
+  });
+
+  gulp.task('copy-fonts', function() {
+    var folders = getFolders(foldersPath);
+
+    var tasks = folders.map(
+      function(folder) {
+        return gulp.src(path.join(sharedPath, '/fonts/*.*'))
+                   .pipe(gulp.dest(path.join('build/', folder)));
+      });
 
     return tasks;
   });
@@ -169,7 +179,8 @@
     'copy-images',
     'build-html',
     'build-css',
-    'build-js'
+    'build-js',
+    'copy-fonts'
   ]);
 
   gulp.task('deploy', [ 'clean-deploy', 'compress-images' ], function() {

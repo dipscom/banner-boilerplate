@@ -2,10 +2,13 @@
 <html>
 <head>
 	<meta charset="utf-8">
-  <!-- Insert css file -->
+  <!-- Css file -->
 	<link rel="stylesheet" type="text/css" href="styles.css">
   <!-- Insert relevant ad serving packages -->
-  <!-- Insert relevant custom javascript file -->
+
+	<!-- Tweening engine: GSAP. Make sure you check if the ad platform has their own CDN link and update accordingly -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.2/TweenMax.min.js"></script>
+  <!-- Custom javascript file(s) -->
 	<script type="text/javascript" src="main.js"></script>
 </head>
 
@@ -14,6 +17,15 @@
 	sure they do not inherit any CSS from the main page or somewhere else -->
   <ad-banner>
     <!-- Here goes content -->
+
+		<!-- Make sure you use the correct tags for the correct jobs.
+		If you are separating your ad into different sections, use the section tag. -->
+		<section>
+			<p>Oh my!</p>
+			<p>fully animated text that wraps around!</p>
+		</section>
+
+		<!-- The main clicktag - be semantically correct, if it is a button, make it a button -->
 		<button id="clicktag">&nbsp;</button>
   </ad-banner>
 </body>
