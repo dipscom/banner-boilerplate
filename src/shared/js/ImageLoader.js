@@ -5,9 +5,6 @@ var ImageLoader = function(path, dbug) {
   var count = 0;
 
   this.load = function(parent, names, extension, className, id) {
-    // Set some defaults
-    // TODO:::
-
     // Grab the html tag based on the string provided
     var container = document.getElementById(parent);
     // Loop thru the array provided
@@ -23,7 +20,7 @@ var ImageLoader = function(path, dbug) {
     count++;
     // Create the element tag
     var image = document.createElement("img");
-    // If a path was provided, use it 
+    // If a path was provided, use it
     image.src = (path ? path + name + extension : name + extension)
     // If an id name was provided, use it - Otherwise, use the original filename
     image.id = (id ? id : name);
