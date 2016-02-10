@@ -192,7 +192,8 @@
     return tasks;
   });
 
-  gulp.task('watch',['build'], function() {
+  gulp.task('default',['build'], function() {
+    // TO DO: dest has to be mandatory or have a deault folder.
     var dest = 'build/' + argv.f;
     console.log("Watching folder: ", argv.f, dest);
     browserSync.init({
@@ -205,7 +206,7 @@
     gulp.watch('src/**/*.js', ['watch-js']);
   });
 
-  gulp.task('default', ['build']);
+  // gulp.task('default', ['build']);
     // Minify it
     // Zip each folder up
     // Move each of them to a deploy folder
