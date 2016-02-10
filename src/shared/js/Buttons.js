@@ -1,10 +1,10 @@
-var Button = function(elements) {
+var Buttons = function() {
   "use strict";
   this.enable = function(elements) {
     enableButtons(elements);
   }
 
-  this.disnable = function(elements) {
+  this.disable = function(elements) {
     disableButtons(elements);
   }
 

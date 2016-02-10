@@ -2,7 +2,8 @@
 var Ad = function() {
   'use strict';
   // add the buttons
-  var btns = new Button(["clicktag"]);
+  var btns = new Buttons();
+  btns.enable(["clicktag"]);
 };
 
 // wait until DOM is ready

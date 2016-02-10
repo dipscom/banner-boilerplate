@@ -1,7 +1,7 @@
-/*
-  These are the shared css rules
-  applied to all banners
-*/
+/* ************************ */
+/*  Shared css rules        */
+/*  applied to all banners  */
+/* ************************ */
 html, body {
   border: 0;
   margin: 0;
@@ -12,8 +12,9 @@ img, #clicktag {
   position: absolute;
 }
 
-#ad {
+ad-banner {
   border: 1px solid black;
+  display: block;
   position: relative;
   overflow: hidden;
   background-color: green;
@@ -29,14 +30,15 @@ img, #clicktag {
   height: 100%;
   visibility: visible;
   cursor: pointer;
+  opacity: 0;
 }
 
 
 
 
-/* ***************** */
+/* **************** */
 /* Z-index ordering */
-/* ***************** */
+/* **************** */
 #clicktag {
   z-index: 1;
 }
