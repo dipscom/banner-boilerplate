@@ -2,8 +2,8 @@
   'use strict';
   var
     argv = require('yargs')
-      .usage('Usage: -f [string]')
-      // .demand(['f'])
+      .usage('\nError.\nYou have to specify the folder of the unit you want Gulp to watch.\nE.g: gulp -f 300x250')
+      .demand(['f'])
       .argv,
     browserSync = require('browser-sync').create(),
     del = require('del'),
@@ -49,7 +49,7 @@
           ])
           .pipe(plugin.concat('main.js'))
           // TO DO: move the minifying to a deploy task
-          .pipe(plugin.uglify())
+          // .pipe(plugin.uglify())
           .pipe(gulp.dest(path.join('build/', folder)));
         }
     );
