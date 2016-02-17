@@ -2,10 +2,6 @@
 var Ad = function() {
   'use strict';
 
-  // For debugging
-  var dbug = true;
-
-
   // Get the ad's size for future use
   var stage = {
     w:document.querySelector("ad-banner").offsetWidth,
@@ -42,11 +38,8 @@ var Ad = function() {
 
   }
 
-  // Animation constructor
+  // Prepare the animation
   var anim = new Animation(stage, date);
-
-  addListeners();
-
 
   // You can target the first element tag
   // TO DO: make a bg image to use
@@ -69,75 +62,14 @@ var Ad = function() {
 
   }
 
-
   function onImagesLoaded() {
-    if(dbug) console.log("[AD] Images loaded");
-
     // Add the button
     btns.enable(["clicktag", "cta"]);
 
     anim.build(stage.w, stage.h);
   }
-
-
-  // Mouse methods
-  function checkClick(e) {
-    var trg = e.param;
-
-    console.log("checkClick:", trg);
-
-    switch (trg) {
-      case "clicktag":
-      case "cta":
-        anim.goToEnd();
-
-      break;
-
-      default:
-        // clickout by default
-
-    }
-  }
-
-
-  function checkOver(e) {
-    var trg = e.param;
-
-    console.log("checkClick:", trg);
-
-    switch (trg) {
-      case "cta":
-        TweenMax.to(cta, 0.3, {scale:1.1, ease:Back.easeInOut});
-        break;
-
-      default:
-        // Do nothing by default
-
-    }
-  }
-
-
-  function checkOut(e) {
-    var trg = e.param;
-
-    console.log("checkClick:", trg);
-
-    switch (trg) {
-      case "cta":
-        TweenMax.to(cta, 0.3, {scale:1, ease:Back.easeInOut});
-        break;
-
-      default:
-      // Do nothing by default
-
-    }
-  }
-
 };
 /* End Ad(); */
-
-
-
 
 // wait until DOM is ready
 document.addEventListener("DOMContentLoaded", function(event) {
