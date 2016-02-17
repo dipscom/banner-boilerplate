@@ -41,12 +41,17 @@ gulp.task('default', ['watch']);
   var
     argv = require('yargs')
 <<<<<<< HEAD
+<<<<<<< HEAD
       .usage('Usage: -f [string]')
       // .demand(['f'])
 =======
       .usage('\nError.\nYou have to specify the folder of the unit you want Gulp to watch.\nE.g: gulp -f 300x250')
       .demand(['f'])
 >>>>>>> parent of 8607940... Merge pull request #6 from dipscom/split-gulptasks-branch
+=======
+      .usage('Usage: -f [string]')
+      // .demand(['f'])
+>>>>>>> parent of 048b953... Default task now requires argument
       .argv,
     browserSync = require('browser-sync').create(),
     del = require('del'),
@@ -93,10 +98,14 @@ gulp.task('default', ['watch']);
           .pipe(plugin.concat('main.js'))
           // TO DO: move the minifying to a deploy task
 <<<<<<< HEAD
+<<<<<<< HEAD
           .pipe(plugin.uglify())
 =======
           // .pipe(plugin.uglify())
 >>>>>>> parent of 8607940... Merge pull request #6 from dipscom/split-gulptasks-branch
+=======
+          .pipe(plugin.uglify())
+>>>>>>> parent of 048b953... Default task now requires argument
           .pipe(gulp.dest(path.join('build/', folder)));
         }
     );
