@@ -1,224 +1,33 @@
-(function() {
-  'use strict';
-  var
-    argv = require('yargs')
-      .usage('\nError.\nYou have to specify the folder of the unit you want Gulp to watch.\nE.g: gulp -f 300x250')
-      .demand(['f'])
-      .argv,
-    browserSync = require('browser-sync').create(),
-    del = require('del'),
-    fileSystem = require('fs'),
-    gulp = require('gulp'),
-    path = require('path'),
-    plugin =  require('gulp-load-plugins')({ lazy: true }),
-    // TO DO: Move these paths to gulpconfig.js
-    foldersPath = 'src/ads/',
-    sharedPath = 'src/shared/';
+/*
+ *  gulpfile.js
+ *  ===========
+ *
+ *  Rather than manage one giant configuration file responsible
+ *  for creating multiple tasks, each task has been broken out into
+ *  its own file in gulp/tasks. Any files in that directory get
+ *  automatically required below.
+ *
+ *  To add a new task, simply add a new task file in that directory.
+ *
+ */
 
-  function getFolders(dir) {
-    return fileSystem
-      .readdirSync(dir)
-      .filter( function(file) {
-        return fileSystem.statSync(path.join(dir, file)).isDirectory();
-      });
-  }
+var
+    gulp        = require('gulp'),
+    requireDir  = require('require-dir');
 
-  gulp.task('copy-js-libs', function(){
-    // If there are extra libraries that have to be included
-    // These will NOT be concatenated into the main.js file
-    var folders = getFolders(foldersPath);
+// Specify global variables.
+global.paths = {
+    src: './src',
+    // out: './bin',
 
-    var tasks = folders.map(
-      function(folder) {
-        return gulp
-        .src(path.join(sharedPath, 'libs/*.js'))
-        .pipe(gulp.dest(path.join('build/', folder)));
-      }
-    );
-  });
+    get scripts() { return this.src + '/**/*.js'; }
+    // get jsEntry() { return this.src + '/index'; }
+};
 
-  gulp.task('build-js', ['copy-js-libs'], function() {
-    var folders = getFolders(foldersPath);
+// Require all tasks in gulp/tasks, including subfolders
+requireDir('./gulp/tasks', { recurse: true });
 
-    var tasks = folders.map(
-      function(folder) {
-        return gulp
-          .src([
-            path.join(sharedPath, '/js/*.js'),
-            path.join(foldersPath, folder, 'js/*.js')
-          ])
-          .pipe(plugin.concat('main.js'))
-          // TO DO: move the minifying to a deploy task
-          // .pipe(plugin.uglify())
-          .pipe(gulp.dest(path.join('build/', folder)));
-        }
-    );
 
-    return tasks;
-  });
 
-  gulp.task('watch-js', ['build-js'], function(){
-    // TO DO:
-    // Make it so it is not needed to copy all
-    // external JS libraries on each reload
-    browserSync.reload();
-  });
-
-  gulp.task('build-html', function() {
-    var folders = getFolders(foldersPath);
-
-    var tasks = folders.map(
-      function(folder) {
-        return gulp
-        .src(path.join(sharedPath, '*.html'))
-        .pipe(gulp.dest(path.join('build/', folder)));
-      }
-    );
-
-    return tasks;
-  });
-
-  gulp.task('build-css', function() {
-    var folders = getFolders(foldersPath);
-
-    var tasks = folders.map(
-      function(folder) {
-        console.log(sharedPath);
-        return gulp.src([
-                      path.join(sharedPath, 'css/*.css'),
-                      path.join(foldersPath, folder, 'css/*.css')
-                    ])
-                    .pipe(plugin.concat('styles.css'))
-                    .pipe(plugin.autoprefixer({ browsers: ['last 2 versions'] }))
-                    // TO DO: Move the minifying to a deploy task
-                    // .pipe(plugin.cssnano())
-                    .pipe(gulp.dest(path.join('build/', folder)))
-                    .pipe(browserSync.stream());
-      });
-
-    return tasks;
-  });
-
-  gulp.task('watch-html', ['build-html'], function(){
-    browserSync.reload();
-  });
-
-  gulp.task('copy-shared-images', function() {
-    var folders = getFolders(foldersPath);
-
-    var tasks = folders.map(
-      function(folder) {
-        return gulp
-        .src(path.join(sharedPath, 'imgs/*.*'))
-        .pipe(gulp.dest(path.join('build/', folder)));
-      }
-    );
-  });
-
-  gulp.task('copy-images', ['copy-shared-images'], function() {
-    var folders = getFolders(foldersPath);
-
-    var tasks = folders.map(
-      function(folder) {
-        return gulp
-          .src(path.join(foldersPath, folder, '/imgs/*.*'))
-          .pipe(gulp.dest(path.join('build/', folder)));
-      }
-    );
-
-    return tasks;
-  });
-
-  gulp.task('watch-images', ['copy-images'], function(){
-    browserSync.reload();
-  });
-
-  gulp.task('compress-images', function() {
-    var folders = getFolders(foldersPath);
-
-    var tasks = folders.map(
-      function(folder) {
-        return gulp
-          .src(path.join('build/', folder, './*.{gif,jpg,png,svg}'))
-          .pipe(plugin.imagemin())
-          .pipe(gulp.dest(path.join('build/', folder)));
-      }
-    );
-
-    return tasks;
-  });
-
-  gulp.task('copy-fonts', function() {
-    var folders = getFolders(foldersPath);
-
-    var tasks = folders.map(
-      function(folder) {
-        return gulp.src(path.join(sharedPath, '/fonts/*.*'))
-                   .pipe(gulp.dest(path.join('build/', folder)));
-      });
-
-    return tasks;
-  });
-
-  gulp.task('clean-build', function() {
-    del('build/**/*.*');
-    /*
-    TO DO
-    Figure out a way to call the following
-    compress-images, build-html, build-css, build-js
-    once the del task is completed
-    */
-  });
-
-  gulp.task('clean-deploy', function() {
-    del('deploy/*.*');
-  });
-
-  gulp.task('build', [
-    'clean-build',
-    'copy-images',
-    'build-html',
-    'build-css',
-    'build-js',
-    'copy-fonts'
-  ]);
-
-  gulp.task('deploy', [ 'clean-deploy', 'compress-images' ], function() {
-    /* TO DO:
-      Run the clean-deploy task first then, run the build task
-
-      BUG !
-      The compressed images are NOT being zipped into the deploy folders
-    */
-    // Zip each ad on its own folder and place them into a 'deploy' folder
-    var folders = getFolders('./build/');
-
-    var tasks = folders.map(function(folder) {
-      return gulp
-        .src(path.join('build/', folder, '/*'))
-        .pipe(plugin.zip(folder + '.zip'))
-        .pipe(gulp.dest('deploy/'));
-      });
-
-    return tasks;
-  });
-
-  gulp.task('default',['build'], function() {
-    // TO DO: dest has to be mandatory or have a deault folder.
-    var dest = 'build/' + argv.f;
-    console.log("Watching folder: ", argv.f, dest);
-    browserSync.init({
-      server: dest
-    });
-
-    gulp.watch('src/**/*.{gif,jpg,png,svg}', ['watch-images']);
-    gulp.watch('src/**/*.css', ['build-css']);
-    gulp.watch('src/**/*.html', ['watch-html']);
-    gulp.watch('src/**/*.js', ['watch-js']);
-  });
-
-  // gulp.task('default', ['build']);
-    // Minify it
-    // Zip each folder up
-    // Move each of them to a deploy folder
-})();
+// default task
+gulp.task('default', ['watch']);
