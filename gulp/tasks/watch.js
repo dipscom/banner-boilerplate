@@ -6,8 +6,9 @@ var gulp = require('gulp'),
 
 
 // Main Watch
-gulp.task('watch', function() {
-  // TO DO: dest has to be mandatory or have a deault folder.
+gulp.task('watch', ['build'], function() {
+  // TO DO: 'build' is not being run
+  // TO DO: dest has to be mandatory or have a default folder.
   var argv = require('yargs')
     .usage('\nError.\nYou have to specify the folder of the unit you want Gulp to watch.\nE.g: gulp -f 300x250')
     .demand(['f'])
