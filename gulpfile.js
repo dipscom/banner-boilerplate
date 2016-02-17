@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 /*
  *  gulpfile.js
  *  ===========
@@ -33,12 +34,19 @@ requireDir('./gulp/tasks', { recurse: true });
 // default task
 gulp.task('default', ['watch']);
 =======
+=======
+>>>>>>> parent of 8607940... Merge pull request #6 from dipscom/split-gulptasks-branch
 (function() {
   'use strict';
   var
     argv = require('yargs')
+<<<<<<< HEAD
       .usage('Usage: -f [string]')
       // .demand(['f'])
+=======
+      .usage('\nError.\nYou have to specify the folder of the unit you want Gulp to watch.\nE.g: gulp -f 300x250')
+      .demand(['f'])
+>>>>>>> parent of 8607940... Merge pull request #6 from dipscom/split-gulptasks-branch
       .argv,
     browserSync = require('browser-sync').create(),
     del = require('del'),
@@ -84,7 +92,11 @@ gulp.task('default', ['watch']);
           ])
           .pipe(plugin.concat('main.js'))
           // TO DO: move the minifying to a deploy task
+<<<<<<< HEAD
           .pipe(plugin.uglify())
+=======
+          // .pipe(plugin.uglify())
+>>>>>>> parent of 8607940... Merge pull request #6 from dipscom/split-gulptasks-branch
           .pipe(gulp.dest(path.join('build/', folder)));
         }
     );
@@ -257,4 +269,7 @@ gulp.task('default', ['watch']);
     // Zip each folder up
     // Move each of them to a deploy folder
 })();
+<<<<<<< HEAD
 >>>>>>> parent of 048b953... Default task now requires argument
+=======
+>>>>>>> parent of 8607940... Merge pull request #6 from dipscom/split-gulptasks-branch
