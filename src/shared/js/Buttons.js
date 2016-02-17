@@ -29,7 +29,12 @@ var Buttons = function() {
 
   function clicked(e) {
     console.log("You have clicked on:", e.target.id);
-
+    // You'll want other parts of the ad to know when there has been a mouse over
+    var event = document.createEvent('Event');
+    event.initEvent("CLICKED", true, false);
+    event.param = e.target.id;
+    // The event dispatched carries the id name of the dispatecher
+    window.dispatchEvent(event);
   }
 
   function onOver(e) {
