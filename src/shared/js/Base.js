@@ -1,4 +1,4 @@
-/* Shared.js */
+/* Base.js */
 var Ad = function() {
   'use strict';
 
@@ -71,15 +71,5 @@ var Ad = function() {
 };
 /* End Ad(); */
 
-// wait until DOM is ready
-document.addEventListener("DOMContentLoaded", function(event) {
 
-  // wait until window, stylesheets, images, links, and other media assets are loaded
-  window.onload = function() {
-
-    // All ready, start!
-    Ad();
-
-  };
-});
-/* End of Shared.js */
+/* End of Base.js */
