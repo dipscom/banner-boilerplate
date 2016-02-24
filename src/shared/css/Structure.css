@@ -17,7 +17,7 @@ ad-banner {
   display: block;
   position: relative;
   overflow: hidden;
-  background-color: rgb(20, 20, 20);
+  background-color: rgb(50, 50, 120);
   /* Width and height to be defined in the custom scss file */
 }
 

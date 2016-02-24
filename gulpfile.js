@@ -3,7 +3,7 @@
   var
     argv = require('yargs')
       .usage('Usage: -f [string]')
-      // .demand(['f'])
+      .demand(['f'])
       .argv,
     browserSync = require('browser-sync').create(),
     del = require('del'),

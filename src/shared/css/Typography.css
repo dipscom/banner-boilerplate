@@ -9,4 +9,10 @@
 
 p {
   font-family: 'BannerFont', Arial, sans-serif;
+	color: white;
+}
+
+.svgText {
+	position: relative;
+	display: inline-block;
 }

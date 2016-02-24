@@ -45,7 +45,7 @@ var Ad = function() {
   // TO DO: make a bg image to use
   // ldr.load("ad-banner", ["bg"], ".jpg");
   // Or you can target specific id names
-  ldr.load("svgText", ["here, is, a, bunch, of, text"], ".svg");
+  ldr.load("svgText", ["here", "is", "a", "bunch", "of", "text"], ".svg", "svgText");
 
 
   // add the buttons
