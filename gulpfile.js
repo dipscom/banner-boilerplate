@@ -1,19 +1,21 @@
 (function() {
   'use strict';
   var
-    argv = require('yargs')
-      .usage('Usage: -f [string]')
-      .demand(['f'])
-      .argv,
     browserSync = require('browser-sync').create(),
     del = require('del'),
     fileSystem = require('fs'),
+    f,
     gulp = require('gulp'),
     path = require('path'),
     plugin =  require('gulp-load-plugins')({ lazy: true }),
+    runSequence = require('run-sequence'),
+
     // TO DO: Move these paths to gulpconfig.js
     foldersPath = 'src/ads/',
     sharedPath = 'src/shared/';
+
+
+
 
   function getFolders(dir) {
     return fileSystem
@@ -22,6 +24,9 @@
         return fileSystem.statSync(path.join(dir, file)).isDirectory();
       });
   }
+
+
+
 
   gulp.task('copy-js-libs', function(){
     // If there are extra libraries that have to be included
@@ -37,6 +42,10 @@
     );
   });
 
+
+
+
+
   gulp.task('build-js', ['copy-js-libs'], function() {
     var folders = getFolders(foldersPath);
 
@@ -48,8 +57,6 @@
             path.join(foldersPath, folder, 'js/*.js')
           ])
           .pipe(plugin.concat('main.js'))
-          // TO DO: move the minifying to a deploy task
-          // .pipe(plugin.uglify())
           .pipe(gulp.dest(path.join('build/', folder)));
         }
     );
@@ -57,12 +64,20 @@
     return tasks;
   });
 
+
+
+
+
+
   gulp.task('watch-js', ['build-js'], function(){
     // TO DO:
     // Make it so it is not needed to copy all
     // external JS libraries on each reload
     browserSync.reload();
   });
+
+
+
 
   gulp.task('build-html', function() {
     var folders = getFolders(foldersPath);
@@ -78,12 +93,14 @@
     return tasks;
   });
 
+
+
+
   gulp.task('build-css', function() {
     var folders = getFolders(foldersPath);
 
     var tasks = folders.map(
       function(folder) {
-        console.log(sharedPath);
         return gulp.src([
                       path.join(sharedPath, 'css/*.css'),
                       path.join(foldersPath, folder, 'css/*.css')
@@ -99,9 +116,67 @@
     return tasks;
   });
 
+
+
+
+  gulp.task('compress-css', function() {
+    var folders = getFolders(foldersPath);
+
+    var tasks = folders.map(
+      function(folder) {
+        return gulp.src([
+                      path.join('build', folder, './*.css')
+                    ])
+                    .pipe(plugin.cssnano())
+                    .pipe(gulp.dest(path.join('deploy/', folder)))
+      });
+
+    return tasks;
+  });
+
+
+
+  gulp.task('compress-js', function() {
+    var folders = getFolders(foldersPath);
+
+    var tasks = folders.map(
+      function(folder) {
+        return gulp.src([
+                      path.join('build', folder, './*.js')
+                    ])
+                    .pipe(plugin.uglify())
+                    .pipe(gulp.dest(path.join('deploy/', folder)));
+        }
+    );
+
+    return tasks;
+  });
+
+
+  gulp.task('compress-images', function() {
+    var folders = getFolders(foldersPath);
+
+    var tasks = folders.map(
+      function(folder) {
+        return gulp
+          .src(path.join('build/', folder, './*.{gif,jpg,png,svg}'))
+          .pipe(plugin.imagemin())
+          .pipe(gulp.dest(path.join('deploy/', folder)));
+      }
+    );
+
+    return tasks;
+  });
+
+
+
+
   gulp.task('watch-html', ['build-html'], function(){
     browserSync.reload();
   });
+
+
+
 
   gulp.task('copy-shared-images', function() {
     var folders = getFolders(foldersPath);
@@ -114,6 +189,9 @@
       }
     );
   });
+
+
+
 
   gulp.task('copy-images', ['copy-shared-images'], function() {
     var folders = getFolders(foldersPath);
@@ -129,24 +207,17 @@
     return tasks;
   });
 
+
+
+
   gulp.task('watch-images', ['copy-images'], function(){
     browserSync.reload();
   });
 
-  gulp.task('compress-images', function() {
-    var folders = getFolders(foldersPath);
 
-    var tasks = folders.map(
-      function(folder) {
-        return gulp
-          .src(path.join('build/', folder, './*.{gif,jpg,png,svg}'))
-          .pipe(plugin.imagemin())
-          .pipe(gulp.dest(path.join('build/', folder)));
-      }
-    );
 
-    return tasks;
-  });
+
+
 
   gulp.task('copy-fonts', function() {
     var folders = getFolders(foldersPath);
@@ -160,53 +231,58 @@
     return tasks;
   });
 
+
+
+
   gulp.task('clean-build', function() {
-    del('build/**/*.*');
-    /*
-    TO DO
-    Figure out a way to call the following
-    compress-images, build-html, build-css, build-js
-    once the del task is completed
-    */
+    return del('build/*');
   });
 
-  gulp.task('clean-deploy', function() {
-    del('deploy/*.*');
+
+
+
+  gulp.task('build', ['clean-build'], function() {
+    return runSequence(['copy-images', 'build-html', 'build-css', 'build-js', 'copy-fonts']);
   });
 
-  gulp.task('build', [
-    'clean-build',
-    'copy-images',
-    'build-html',
-    'build-css',
-    'build-js',
-    'copy-fonts'
-  ]);
 
-  gulp.task('deploy', [ 'clean-deploy' ], function() {
-    /* TO DO:
-      Run the clean-deploy task first then, run the build task
 
-      BUG !
-      The compressed images are NOT being zipped into the deploy folders
-    */
-    // Zip each ad on its own folder and place them into a 'deploy' folder
+
+  gulp.task('zip', function() {
     var folders = getFolders('./build/');
 
     var tasks = folders.map(function(folder) {
       return gulp
-        .src(path.join('build/', folder, '/*'))
+        .src(path.join('deploy/', folder, '/*'))
         .pipe(plugin.zip(folder + '.zip'))
         .pipe(gulp.dest('deploy/'));
       });
 
     return tasks;
+  })
+
+
+
+
+  gulp.task('clean-deploy', function() {
+    return del('deploy/*');
   });
 
-  gulp.task('default',['build'], function() {
-    // TO DO: dest has to be mandatory or have a deault folder.
-    var dest = 'build/' + argv.f;
-    console.log("Watching folder: ", argv.f, dest);
+
+
+
+  gulp.task('deploy', ['clean-deploy'], function() {
+    return runSequence(['compress-images', 'compress-js', 'compress-css'], 'zip');
+  });
+
+
+
+
+  gulp.task('watch', function(){
+    var dest = 'build/' + f;
+
+    console.log("Watching folder: ", f, dest);
+
     browserSync.init({
       server: dest
     });
@@ -217,8 +293,25 @@
     gulp.watch('src/**/*.js', ['watch-js']);
   });
 
-  // gulp.task('default', ['build']);
-    // Minify it
-    // Zip each folder up
-    // Move each of them to a deploy folder
+
+
+
+  gulp.task('default', function(callback) {
+
+    var argv = require('yargs')
+        .usage('Usage: -f [folder name]')
+        .demand(['f'])
+        .argv;
+
+    if(argv.f === true) {
+      console.log('--------------------------\nERROR: -f cannot be empty\n\nUsage: gulp -f folderName\n^^^^^^^^^^^^^^^^^^^^^^^^^');
+      return;
+    } else {
+      f = argv.f;
+      runSequence('build', 'watch', callback);
+    }
+  });
+
+
+
 })();
