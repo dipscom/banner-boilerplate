@@ -4,8 +4,8 @@ var Ad = function() {
 
   // Get the ad's size for future use
   var stage = {
-    w:document.querySelector("ad-banner").offsetWidth,
-    h:document.querySelector("ad-banner").offsetHeight
+    w:document.querySelector("banner-ad").offsetWidth,
+    h:document.querySelector("banner-ad").offsetHeight
   };
 
   // Instantiate the necessary constructors
@@ -43,7 +43,7 @@ var Ad = function() {
 
   // You can target the first element tag
   // TO DO: make a bg image to use
-  // ldr.load("ad-banner", ["bg"], ".jpg");
+  // ldr.load("banner-ad", ["bg"], ".jpg");
   // Or you can target specific id names
   ldr.load("svgText", ["here", "is", "a", "bunch", "of", "text"], ".svg", "svgText");
 

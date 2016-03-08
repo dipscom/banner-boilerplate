@@ -12,7 +12,7 @@ section, img, #clicktag {
   position: absolute;
 }
 
-ad-banner {
+banner-ad {
   border: 1px solid rgb(0, 0, 0);
   display: block;
   position: relative;
@@ -56,6 +56,11 @@ section {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+}
+
+.guide {
+  opacity: 0.5;
+  z-index: 100;
 }
 
 
