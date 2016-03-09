@@ -2,6 +2,9 @@
 var Ad = function() {
   'use strict';
 
+  // For testing
+  var dbug = true;
+
   // Get the ad's size for future use
   var stage = {
     w:document.querySelector("banner-ad").offsetWidth,
@@ -9,11 +12,11 @@ var Ad = function() {
   };
 
   // Instantiate the necessary constructors
-  var ldr = new ImageLoader(null, true);
+  var ldr = new ImageLoader(null, dbug);
   var btns = new Buttons();
 
   // Define the date variable
-  var date = DateChecker("2016-02-19", "2016-02-14");
+  var date = DateChecker("2016-02-19", "2016-02-14", dbug);
   var releaseDate;
 
   switch (date) {
@@ -38,6 +41,9 @@ var Ad = function() {
 
   }
 
+  // Setup the listeners
+  addListeners();
+
   // Prepare the animation
   var anim = new Animation(stage, date);
 
@@ -47,9 +53,8 @@ var Ad = function() {
   // Or you can target specific id names
   ldr.load("svgText", ["here", "is", "a", "bunch", "of", "text"], ".svg", "svgText");
 
-
-  // add the buttons
-  btns.enable(["clicktag"]);
+  // Here's a way to load a semi transparent reference image
+  // ldr.load("banner-ad", ["Endframe"], ".jpg", "guide")
 
 
   /* ************** */
@@ -63,13 +68,14 @@ var Ad = function() {
   }
 
   function onImagesLoaded() {
-    // Add the button
+    // Enable the buttons
     btns.enable(["clicktag", "cta"]);
 
-    anim.build(stage.w, stage.h);
+    anim.build();
   }
 };
 /* End Ad(); */
 
+// The constructor for the main Ad() is "ads>adSize>js>Custom.js" each size has its own custom details that need to be fed into the main Ad() object
 
 /* End of Base.js */
