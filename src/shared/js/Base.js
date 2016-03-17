@@ -1,5 +1,5 @@
 /* Base.js */
-var Ad = function() {
+var Ad = function(adName) {
   'use strict';
 
   // For testing
@@ -8,7 +8,8 @@ var Ad = function() {
   // Get the ad's size for future use
   var stage = {
     w:document.querySelector("banner-ad").offsetWidth,
-    h:document.querySelector("banner-ad").offsetHeight
+    h:document.querySelector("banner-ad").offsetHeight,
+    name: adName || "noName"
   };
 
   // Instantiate the necessary constructors

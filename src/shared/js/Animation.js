@@ -4,6 +4,7 @@ var Animation = function(stage, date, dbug) {
 
   this.stage = stage || {w:300, h:250};
   this.date = date;
+  this.name = stage.name;
 
   var main_tl = new TimelineLite({onComplete:loop, paused:true}),
     dur = 0.3,
