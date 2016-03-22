@@ -1,4 +1,5 @@
 var Animation = function(stage, date, dbug) {
+  var dbug = dbug;
 
   if(dbug) console.log("[ANIMATION] constructor");
 

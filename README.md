@@ -1,33 +1,40 @@
 # HTML Banner boilerplate
 
-> Work in progress, still writing this thing up
+> ## Work in progress, still writing this thing up
 
 Base setup for an automated HTML5 banner ad project using Gulp
 
-##Setup
+## Setup:
 
-*Important: If you have not worked with Gulp before you will need to install [NodeJS](https://nodejs.org/) before going any further*.
-
-- First download the zip and extract it in the relevant folder.
-- Rename the folder to suit your needs.
-- Open your command line tool of choice and navigate to the renamed folder.
+##### *Important: If you have not worked with Gulp before you will need to install [NodeJS](https://nodejs.org/) before going any further*.
 
 
-- If you have NodeJS and Gulp installed globally:
-- - Run `npm install`.
-- - You are now done, start building your ads. ~Or, if this is your first time, read the Long Version section~
+#### If you have [NodeJS](https://nodejs.org/) and [Gulp](http://gulpjs.com/) installed globally:
+
+ - Download the zip and extract it in the folder of your choice.
+ - Rename the folder to suit your needs.
+
+ *The default folder name is banner-boilerplate, a good rule of thumb is to rename it to describe what type of ads will go into it. E.g. Standards, Rich, Expanding, etc...*
+
+ - Open your command line tool of choice and navigate to the renamed folder.
+
+ `cd your-chosen-directory-path/banner-boilerplate`
+ - Run `npm install`.
+ - You are now done with the setup, see *Usage* bellow to start building your ads.
+
+ *And if this is your first time, read the Long Version section as well for a in-depth run of how everything is organized*
 
 
-- If you do not:
-- - Install [NodeJS](https://nodejs.org/) (It will install npm by default).
-- - Run `npm install -g gulp` (This will install Gulp globally).
-- - Run `npm install` (This will install Gulp and dependencies for your project).
+#### If you do not have [NodeJS](https://nodejs.org/) and [Gulp](http://gulpjs.com/) installed globally:
+ - Install [NodeJS](https://nodejs.org/) (It will install npm by default).
+ - Run `npm install -g gulp` (This will install Gulp globally).
+ - Run `npm install` (This will install Gulp and dependencies for your project).
 
 
 
-##Usage:
+## Usage:
 
-###Short Version
+### Short Version
 You will be working from the `src` folder.
 
 The main `index.html` is located in the `shared` folder as are the, aptly named, `Shared.js` and `Shared.css`.
@@ -45,4 +52,4 @@ For each different ad size, create a new folder inside the `ads` folder naming i
 
 
 ### Long Version
-> TO DO
+> ## TO DO

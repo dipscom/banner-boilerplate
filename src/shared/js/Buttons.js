@@ -1,4 +1,5 @@
-var Buttons = function() {
+var Buttons = function(dbug) {
+  var dbug = dbug;
   "use strict";
   this.enable = function(elements) {
     enableButtons(elements);
@@ -28,7 +29,7 @@ var Buttons = function() {
   }
 
   function clicked(e) {
-    console.log("You have clicked on:", e.target.id);
+    if(dbug) console.log("You have clicked on:", e.target.id);
     // You'll want other parts of the ad to know when there has been a mouse over
     var event = document.createEvent('Event');
     event.initEvent("CLICKED", true, false);
@@ -38,7 +39,7 @@ var Buttons = function() {
   }
 
   function onOver(e) {
-    console.log("Over on:", e.target.id);
+    if(dbug) console.log("Over on:", e.target.id);
     // You'll want other parts of the ad to know when there has been a mouse over
     var event = document.createEvent('Event');
     event.initEvent("MOUSE_OVER", true, false);
@@ -48,7 +49,7 @@ var Buttons = function() {
   }
 
   function onOut(e) {
-    console.log("Out of:", e.target.id);
+    if(dbug) console.log("Out of:", e.target.id);
     // You'll want other parts of the ad to know when there has been a mouse out
     var event = document.createEvent('Event');
     event.initEvent("MOUSE_OUT", true, false);
