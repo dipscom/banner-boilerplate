@@ -9,7 +9,9 @@ var Animation = function(stage, date, dbug) {
 
   var main_tl = new TimelineLite({onComplete:loop, paused:true}),
     dur = 0.3,
-    hold = 1;
+    hold = 1,
+    plays = 0,
+    loops = 2;
 
   window.addEventListener("CLICKED", goToEnd);
 
@@ -18,6 +20,7 @@ var Animation = function(stage, date, dbug) {
   /* Public methods */
   /* *************** */
   this.build = function() {
+    // Write the animation code here.
   }
 
 
@@ -35,5 +38,12 @@ var Animation = function(stage, date, dbug) {
       if(dbug) console.log(("[ANIMATION]: goToEnd"));
       main_tl.totalProgress(1, true);
     }
+  }
+
+  function loop() {
+   if(plays <= loops) {
+    main_tl.play(0);
+    plays++;
+   }
   }
 }

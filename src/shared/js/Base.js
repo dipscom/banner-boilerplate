@@ -70,7 +70,9 @@ var Ad = function(adName) {
 
   function onImagesLoaded() {
     // Enable the buttons
-    btns.enable(["clicktag", "cta"]);
+    btns.enable(["clicktag"]);
+    // TO DO: Add a cta button
+    // btns.enable(["clicktag", "cta"]);
 
     anim.build();
   }
