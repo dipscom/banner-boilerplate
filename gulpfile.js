@@ -102,16 +102,16 @@
     var tasks = folders.map(
       function(folder) {
         return gulp.src([
-                      path.join(sharedPath, 'css/*.css'),
-                      path.join(foldersPath, folder, 'css/*.css')
-                    ])
-                    .pipe(plugin.concat('styles.css'))
-                    .pipe(plugin.autoprefixer({ browsers: ['last 4 versions'] }))
-                    // TO DO: Move the minifying to a deploy task
-                    // .pipe(plugin.cssnano())
-                    .pipe(gulp.dest(path.join('build/', folder)))
-                    .pipe(browserSync.stream());
-      });
+          path.join(sharedPath, 'css/*.scss'),
+          path.join(foldersPath, folder, 'css/*.scss')
+        ])
+        .pipe(plugin.concat('styles.scss'))
+        .pipe(plugin.sass().on('error', plugin.sass.logError))
+        .pipe(plugin.autoprefixer({ browsers: ['last 4 versions'] }))
+        .pipe(gulp.dest(path.join('build/', folder)))
+        .pipe(browserSync.stream());
+      }
+    );
 
     return tasks;
   });

@@ -34,7 +34,11 @@ Base setup for an automated HTML5 banner ad project using Gulp
    cd your-chosen-directory-path/banner-boilerplate
    ```
 
- - Run `npm install`.
+ - Install the necessary dependencies with
+
+   ```bash
+   npm install
+   ```
 
  - Once all is installed, type the following to see the sample ad that's bundled in this boilerplate
 
