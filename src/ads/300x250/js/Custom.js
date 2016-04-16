@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
   window.onload = function() {
 
     // All ready, start!
-    Ad("mpu");
+    var ad = new Ad({name:"mpu"});
 
   };
 });

@@ -1,5 +1,5 @@
 /* Base.js */
-var Ad = function(adName) {
+var Ad = function(obj) {
   'use strict';
 
   // For testing
@@ -9,12 +9,13 @@ var Ad = function(adName) {
   var stage = {
     w:document.querySelector("banner-ad").offsetWidth,
     h:document.querySelector("banner-ad").offsetHeight,
-    name: adName || "noName"
+    name: obj.name || "noName"
   };
 
-  // Instantiate the necessary constructors
+  // Instantiate the the image loader constructor
   var ldr = new ImageLoader(null, dbug);
-  var btns = new Buttons();
+  // Instantiate the the buttons constructor
+  var btns = new Buttons(dbug);
 
   // Define the date variable
   var date = DateChecker("2016-02-19", "2016-02-14", dbug);
@@ -46,7 +47,7 @@ var Ad = function(adName) {
   addListeners();
 
   // Prepare the animation
-  var anim = new Animation(stage, date);
+  var anim = new Animation(stage, date, dbug);
 
   // You can target the first element tag
   // TO DO: make a bg image to use
@@ -69,16 +70,18 @@ var Ad = function(adName) {
   }
 
   function onImagesLoaded() {
+    // Once all dynamic images have loaded
     // Enable the buttons
     btns.enable(["clicktag"]);
     // TO DO: Add a cta button
     // btns.enable(["clicktag", "cta"]);
 
+    // We have all the assets loaded, let's build the animation
     anim.build();
   }
 };
 /* End Ad(); */
 
-// The constructor for the main Ad() is "ads>adSize>js>Custom.js" each size has its own custom details that need to be fed into the main Ad() object
+// The constructor for the main Ad() is in "ads>adSize>js>Custom.js" each size has its own custom details that need to be fed into the main Ad() object
 
 /* End of Base.js */

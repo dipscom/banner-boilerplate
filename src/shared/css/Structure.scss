@@ -13,7 +13,7 @@ html, body {
   box-sizing: inherit;
 }
 
-section, img, #clicktag {
+section, img, button {
   position: absolute;
 }
 
@@ -22,6 +22,7 @@ banner-ad {
   display: block;
   position: relative;
   overflow: hidden;
+  visibility: hidden; /* We will make the ad visible once we start the animation */
   background-color: rgb(50, 50, 120);
   /* Width and height to be defined in the custom scss file */
 }
@@ -33,9 +34,18 @@ banner-ad {
   top: 0;
   width: 100%;
   height: 100%;
-  visibility: visible;
   cursor: pointer;
   opacity: 0;
+}
+
+/* Reset some button defaults */
+button {
+  background: transparent;
+  border: none;
+
+  &:focus {
+    outline: none;
+  }
 }
 
 section {
@@ -78,6 +88,13 @@ section {
   z-index: 1;
 }
 
-#clicktag {
+button {
   z-index: 2;
 }
+
+
+
+
+/* ****************** */
+/* Non-template rules */
+/* ****************** */
