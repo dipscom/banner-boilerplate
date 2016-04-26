@@ -11,9 +11,10 @@ var Buttons = function(dbug) {
 
   function enableButtons(elements) {
     for (var i = 0; i < elements.length; i++) {
-      var el = document.getElementById(elements[i]);
+      var el = document.getElementById(elements[i]) || document.getElementsByClassName(elements)[0];
+      if(dbug) console.log("Enabling:", el);
       el.style.cursor = "pointer";
-      el.addEventListener("click", clicked); // For all major browsers,  except IE 8 and earlier
+      el.addEventListener("click", clicked, true); // For all major browsers,  except IE 8 and earlier
       el.addEventListener("mouseenter", onOver, false);
       el.addEventListener("mouseleave", onOut, false);
     }
@@ -29,32 +30,32 @@ var Buttons = function(dbug) {
   }
 
   function clicked(e) {
-    if(dbug) console.log("You have clicked on:", e.target.id);
     // You'll want other parts of the ad to know when there has been a mouse over
     var event = document.createEvent('Event');
     event.initEvent("CLICKED", true, false);
-    event.param = e.target.id;
+    event.param = e.target.id || e.target.className;
     // The event dispatched carries the id name of the dispatecher
+    if(dbug) console.log("You have clicked on:", event.param;
     window.dispatchEvent(event);
   }
 
   function onOver(e) {
-    if(dbug) console.log("Over on:", e.target.id);
     // You'll want other parts of the ad to know when there has been a mouse over
     var event = document.createEvent('Event');
     event.initEvent("MOUSE_OVER", true, false);
-    event.param = e.target.id;
+    event.param = e.target.id || e.target.className;
     // The event dispatched carries the id name of the dispatecher
+    if(dbug) console.log("Over on:", event.param);
     window.dispatchEvent(event);
   }
 
   function onOut(e) {
-    if(dbug) console.log("Out of:", e.target.id);
     // You'll want other parts of the ad to know when there has been a mouse out
     var event = document.createEvent('Event');
     event.initEvent("MOUSE_OUT", true, false);
-    event.param = e.target.id;
+    event.param = e.target.id || e.target.className;
     // The event dispatched carries the id name of the dispatecher
+    if(dbug) console.log("Out of:", event.param);
     window.dispatchEvent(event);
   }
 };
