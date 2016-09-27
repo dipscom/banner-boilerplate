@@ -36,6 +36,9 @@ banner-ad {
   height: 100%;
   cursor: pointer;
   opacity: 0;
+  /*Make sure there is some background color added or IE9 and IE10 will not trigger clicks*/
+  background: #000;
+
 }
 
 /* Reset some button defaults */

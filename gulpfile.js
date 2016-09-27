@@ -17,6 +17,8 @@
 
 
 
+
+
   function getFolders(dir) {
     return fileSystem
       .readdirSync(dir)
@@ -24,6 +26,8 @@
         return fileSystem.statSync(path.join(dir, file)).isDirectory();
       });
   }
+
+
 
 
 
@@ -46,6 +50,7 @@
 
 
 
+
   gulp.task('build-js', ['copy-js-libs'], function() {
     var folders = getFolders(foldersPath);
 
@@ -56,7 +61,7 @@
             path.join(sharedPath, '/js/*.js'),
             path.join(foldersPath, folder, 'js/*.js')
           ])
-          .pipe(plugin.concat('main.js'))
+          .pipe(plugin.concat('banner.js'))
           .pipe(gulp.dest(path.join('build/', folder)));
         }
     );
@@ -79,6 +84,8 @@
 
 
 
+
+
   gulp.task('build-html', function() {
     var folders = getFolders(foldersPath);
 
@@ -96,6 +103,26 @@
 
 
 
+  gulp.task('compress-html', function() {
+    var folders = getFolders(foldersPath);
+
+    var tasks = folders.map(
+      function(folder) {
+        return gulp
+        .src(path.join('build', folder, '*.html'))
+        .pipe(plugin.htmlmin())
+        .pipe(gulp.dest(path.join('deploy/', folder)));
+      }
+    );
+
+    return tasks;
+  });
+
+
+
+
+
+
   gulp.task('build-css', function() {
     var folders = getFolders(foldersPath);
 
@@ -105,7 +132,7 @@
           path.join(sharedPath, 'css/*.scss'),
           path.join(foldersPath, folder, 'css/*.scss')
         ])
-        .pipe(plugin.concat('styles.scss'))
+        .pipe(plugin.concat('style.scss'))
         .pipe(plugin.sass().on('error', plugin.sass.logError))
         .pipe(plugin.autoprefixer({ browsers: ['last 4 versions'] }))
         .pipe(gulp.dest(path.join('build/', folder)))
@@ -115,6 +142,8 @@
 
     return tasks;
   });
+
+
 
 
 
@@ -136,6 +165,9 @@
 
 
 
+
+
+
   gulp.task('compress-js', function() {
     var folders = getFolders(foldersPath);
 
@@ -144,7 +176,8 @@
         return gulp.src([
                       path.join('build', folder, './*.js')
                     ])
-                    .pipe(plugin.uglify())
+                    // TO DO: This is mangling the manifest.js file by removing the quote marks from the objects
+                    // .pipe(plugin.uglify())
                     .pipe(gulp.dest(path.join('deploy/', folder)));
         }
     );
@@ -153,20 +186,26 @@
   });
 
 
+
+
+
+
   gulp.task('compress-images', function() {
     var folders = getFolders(foldersPath);
 
     var tasks = folders.map(
       function(folder) {
         return gulp
-          .src(path.join('build/', folder, './*.{gif,jpg,png,svg}'))
+          .src(path.join('build/', folder, 'assets/*.{gif,jpg,png,svg}'))
           .pipe(plugin.imagemin())
-          .pipe(gulp.dest(path.join('deploy/', folder)));
+          .pipe(gulp.dest(path.join('deploy/', folder, '/assets')));
       }
     );
 
     return tasks;
   });
+
+
 
 
 
@@ -178,6 +217,8 @@
 
 
 
+
+
   gulp.task('copy-shared-images', function() {
     var folders = getFolders(foldersPath);
 
@@ -185,10 +226,12 @@
       function(folder) {
         return gulp
         .src(path.join(sharedPath, 'imgs/*.*'))
-        .pipe(gulp.dest(path.join('build/', folder)));
+        .pipe(gulp.dest(path.join('build/', folder, '/assets')));
       }
     );
   });
+
+
 
 
 
@@ -200,12 +243,14 @@
       function(folder) {
         return gulp
           .src(path.join(foldersPath, folder, '/imgs/*.*'))
-          .pipe(gulp.dest(path.join('build/', folder)));
+          .pipe(gulp.dest(path.join('build/', folder, '/assets')));
       }
     );
 
     return tasks;
   });
+
+
 
 
 
@@ -234,6 +279,31 @@
 
 
 
+
+
+  gulp.task('copy-files', function() {
+    // Copies any other file that is placed in the individual folder.
+    // Useful for individual manifest.js files
+    var folders = getFolders(foldersPath);
+
+    var tasks = folders.map(
+      function(folder) {
+
+        return gulp
+        .src(path.join(foldersPath, folder, '/*.*'))
+        .pipe(gulp.dest(path.join('build/', folder)));
+      }
+    );
+
+    return tasks;
+  });
+
+
+
+
+
+
+
   gulp.task('clean-build', function() {
     return del('build/*');
   });
@@ -241,25 +311,33 @@
 
 
 
+
+
   gulp.task('build', ['clean-build'], function() {
-    return runSequence(['copy-images', 'build-html', 'build-css', 'build-js', 'copy-fonts']);
+    return runSequence(['copy-images', 'copy-files', 'build-html', 'build-css', 'build-js', 'copy-fonts']);
   });
 
 
 
 
+
+
   gulp.task('zip', function() {
-    var folders = getFolders('./build/');
+    var folders = getFolders('./deploy/');
 
     var tasks = folders.map(function(folder) {
+
+      console.log(folder);
       return gulp
-        .src(path.join('deploy/', folder, '/*'))
+        .src(path.join('deploy/', folder, '/**/*.*'))
         .pipe(plugin.zip(folder + '.zip'))
-        .pipe(gulp.dest('deploy/'));
+        .pipe(gulp.dest('zipped/'));
       });
 
     return tasks;
   })
+
+
 
 
 
@@ -271,9 +349,13 @@
 
 
 
+
+
   gulp.task('deploy', ['clean-deploy'], function() {
-    return runSequence(['compress-images', 'compress-js', 'compress-css'], 'zip');
+    return runSequence(['compress-images', 'compress-js', 'compress-css', 'compress-html']);
   });
+
+
 
 
 
@@ -292,6 +374,8 @@
     gulp.watch('src/**/*.html', ['watch-html']);
     gulp.watch('src/**/*.js', ['watch-js']);
   });
+
+
 
 
 
