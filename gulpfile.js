@@ -198,7 +198,7 @@
         return gulp
           .src(path.join('build/', folder, 'assets/*.{gif,jpg,png,svg}'))
           .pipe(plugin.imagemin())
-          .pipe(gulp.dest(path.join('deploy/', folder, '/assets')));
+          .pipe(gulp.dest(path.join('deploy/', folder, '/')));
       }
     );
 
@@ -226,7 +226,7 @@
       function(folder) {
         return gulp
         .src(path.join(sharedPath, 'imgs/*.*'))
-        .pipe(gulp.dest(path.join('build/', folder, '/assets')));
+        .pipe(gulp.dest(path.join('build/', folder, '/')));
       }
     );
   });
@@ -243,7 +243,7 @@
       function(folder) {
         return gulp
           .src(path.join(foldersPath, folder, '/imgs/*.*'))
-          .pipe(gulp.dest(path.join('build/', folder, '/assets')));
+          .pipe(gulp.dest(path.join('build/', folder, '/')));
       }
     );
 

@@ -12,21 +12,24 @@ var Animation = function(unit, date, dbug) {
       plays = 0,
       loops = unit.loops || 2;
 
-  window.addEventListener("CLICKED", goToEnd);
+  // window.addEventListener("CLICKED", goToEnd);
 
 
   /* ***************** */
   /* Public methods */
   /* *************** */
   this.build = function() {
+    addListeners();
+
+
     // Write the animation code here.
     main_tl.to("banner-ad", dur, {autoAlpha:1})
     .add("Start")
 
+    .staggerFrom("#frame1 p", dur, {autoAlpha:0}, dur*0.25 )
 
 
 
-    addListeners();
 
     main_tl.play();
 
@@ -79,7 +82,14 @@ var Animation = function(unit, date, dbug) {
 
     // Should it loop?
     if(plays <= loops) {
-      main_tl.play(0);
+      // Wait 3 seconds, then fade out the whole ad before looping
+      TweenMax.to("banner-ad", 0.5, {
+        delay: 3,
+        autoAlpha: 0,
+        onComplete:function () {
+          main_tl.play(0);
+        }
+      });
     }
   }
 

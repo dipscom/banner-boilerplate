@@ -35,7 +35,7 @@ var Buttons = function(dbug) {
     event.initEvent("CLICKED", true, false);
     event.param = e.target.id || e.target.className;
     // The event dispatched carries the id name of the dispatecher
-    if(dbug) console.log("You have clicked on:", event.param;
+    if(dbug) console.log("You have clicked on:", event.param);
     window.dispatchEvent(event);
   }
 
