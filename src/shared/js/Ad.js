@@ -17,16 +17,8 @@ var Ad = function(obj) {
   addListeners();
 
 
-  // Instantiate the the buttons constructor
-  var btns = new Buttons(dbug);
-  // Enable the buttons
-  btns.enable(["clicktag"]);
-
-
-  // Prepare the animation
-  var anim = new Animation(unit, dbug);
-  // We have all the assets loaded, let's build the animation
-  anim.build();
+  // The adPlatform that you may or may not need
+  var adPlatform = new AdPlatform(dbug);
 
 
 
@@ -35,13 +27,30 @@ var Ad = function(obj) {
   /* ************** */
   function addListeners() {
 
-    // Other events
-    // window.addEventListener("IMAGES_LOADED", onImagesLoaded);
+    if(dbug) console.log("[AD] addListeners");
+
+    // AdPlatform events
+    window.addEventListener("PLATFORM_READY", init);
 
   }
 
-  function onImagesLoaded() {
-    // Once all dynamic images have loaded
+
+
+  function init() {
+    if(dbug) console.log("[AD] init");
+
+    // Instantiate the the buttons constructor
+    var btns = new Buttons(dbug);
+    // Enable the buttons
+    btns.enable(["clicktag"]);
+
+    // Prepare the animation
+    var anim = new Animation(this.unit, dbug);
+    // We have all the assets loaded, let's build the animation
+    anim.build();
+
+
+    // Other variables relevant to this particular ad
 
   }
 };

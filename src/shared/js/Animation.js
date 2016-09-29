@@ -1,18 +1,14 @@
-var Animation = function(unit, date, dbug) {
-  var dbug = dbug;
+var Animation = function(unit, dbug) {
 
   if(dbug) console.log("[ANIMATION] constructor");
 
   this.unit = unit;
-  this.date = date;
 
   var main_tl = new TimelineLite({onComplete:loop, paused:true}),
       dur = 0.3,
       hold = 1,
       plays = 0,
       loops = unit.loops || 2;
-
-  // window.addEventListener("CLICKED", goToEnd);
 
 
   /* ***************** */
@@ -31,6 +27,7 @@ var Animation = function(unit, date, dbug) {
 
 
 
+    // Start playing the animation
     main_tl.play();
 
   }

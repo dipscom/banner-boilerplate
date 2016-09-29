@@ -12,7 +12,7 @@ var Buttons = function(dbug) {
   function enableButtons(elements) {
     for (var i = 0; i < elements.length; i++) {
       var el = document.getElementById(elements[i]) || document.getElementsByClassName(elements)[0];
-      if(dbug) console.log("Enabling:", el);
+      if(dbug) console.log("[BUTTONS] Enabling:", el);
       el.style.cursor = "pointer";
       el.addEventListener("click", clicked, true); // For all major browsers,  except IE 8 and earlier
       el.addEventListener("mouseenter", onOver, false);
@@ -35,7 +35,7 @@ var Buttons = function(dbug) {
     event.initEvent("CLICKED", true, false);
     event.param = e.target.id || e.target.className;
     // The event dispatched carries the id name of the dispatecher
-    if(dbug) console.log("You have clicked on:", event.param);
+    if(dbug) console.log("[BUTTONS] You have clicked on:", event.param);
     window.dispatchEvent(event);
   }
 
@@ -45,7 +45,7 @@ var Buttons = function(dbug) {
     event.initEvent("MOUSE_OVER", true, false);
     event.param = e.target.id || e.target.className;
     // The event dispatched carries the id name of the dispatecher
-    if(dbug) console.log("Over on:", event.param);
+    if(dbug) console.log("[BUTTONS] Over on:", event.param);
     window.dispatchEvent(event);
   }
 
@@ -55,7 +55,7 @@ var Buttons = function(dbug) {
     event.initEvent("MOUSE_OUT", true, false);
     event.param = e.target.id || e.target.className;
     // The event dispatched carries the id name of the dispatecher
-    if(dbug) console.log("Out of:", event.param);
+    if(dbug) console.log("[BUTTONS] Out of:", event.param);
     window.dispatchEvent(event);
   }
 };
