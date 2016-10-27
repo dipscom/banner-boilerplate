@@ -91,8 +91,14 @@
 
     var tasks = folders.map(
       function(folder) {
-        return gulp
-        .src(path.join(sharedPath, '*.html'))
+        return gulp.src(
+          [
+            path.join(sharedPath, '/start.html'),
+            path.join(foldersPath, folder, "/*.html"),
+            path.join(sharedPath, '/end.html'),
+          ]
+        )
+        .pipe(plugin.concat('index.html'))
         .pipe(gulp.dest(path.join('build/', folder)));
       }
     );

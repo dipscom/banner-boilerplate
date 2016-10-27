@@ -44,8 +44,9 @@ var Ad = function(obj) {
     // Enable the buttons
     btns.enable(["clicktag"]);
 
+
     // Prepare the animation
-    var anim = new Animation(this.unit, dbug);
+    var anim = new Animation(unit, dbug);
     // We have all the assets loaded, let's build the animation
     anim.build();
 
