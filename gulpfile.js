@@ -288,7 +288,7 @@
 
 
   gulp.task('copy-files', function() {
-    // Copies any other file that is placed in the individual folder.
+    // Copies any other file that is placed in the individual folder, excluding .html files
     // Useful for individual manifest.js files
     var folders = getFolders(foldersPath);
 
@@ -296,7 +296,10 @@
       function(folder) {
 
         return gulp
-        .src(path.join(foldersPath, folder, '/*.*'))
+        .src([
+          path.join(foldersPath, folder, '/*.*'),
+          path.join('!' + foldersPath, folder, '/*.html')
+        ])
         .pipe(gulp.dest(path.join('build/', folder)));
       }
     );
